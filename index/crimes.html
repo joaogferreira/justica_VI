@@ -2,6 +2,9 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!-- STYLE -->
 <style>
 body {
   margin: 0;
@@ -32,21 +35,33 @@ body {
   color: black;
 }
 </style>
+
+<script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
+<script src="crimes_func.js"></script>
+
 </head>
+
 <body>
 
-<div class="topnav">
-  <a style= "margin-left: 20%; height: 100% " class="active" href="crimes.html">Crimes registados</a>
-  <a href="reclusos.html">Reclusos condenados</a>
-  <a href="domestica.html">Crimes de violência doméstica</a>
-  <a href="taxa.html">Taxa de criminalidade</a>
-  <a href="vigilancia.html">Vigilância electrónica</a>
-</div>
+  <!-- BODY -->
+  <div class="topnav">
+    <a style= "margin-left: 20%; height: 100% " class="active" href="crimes.html">Crimes registados</a>
+    <a href="reclusos.html">Reclusos condenados</a>
+    <a href="domestica.html">Crimes de violência doméstica</a>
+    <a href="taxa.html">Taxa de criminalidade</a>
+    <a href="vigilancia.html">Vigilância electrónica</a>
+  </div>
 
-<div style="padding-left:16px">
-  <h2>Top Navigation Example</h2>
-  <p>Some content..</p>
-</div>
+
+  <label for="region">Choose a region: </label>
+
+  <select style="margin-left: 10px;" id="region">
+    <option value="portugal" id="portugal" >Portugal</option>
+    <option value="continente" id="continente" >Continente</option>
+    <option value="acores" id="acores" >R.A. dos Açores</option>
+    <option value="madeira" id="madeira ">R.A. da Madeira</option>
+  </select>
+
 
 </body>
 </html>
