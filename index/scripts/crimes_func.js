@@ -9,43 +9,24 @@ async function updateLegend(newData) {
     if(newData=="portugal"){
       /*
       const sample = [{}]
-
-
       d3.csv("data/crimes_pt.csv").then(function(data) {
         for(i=0;i<data.length;i++){
           const aux = { type: data[i].Tipo , value: +data[i].Valor };
           sample.push(aux);
-
         }
       });
       */
 
-      /*
-     Crimes contra as pessoas,86383
-      Crimes de homicídio voluntário consumado,89
-      Crimes contra a integridade física,56460
-      Ofensa à integridade física voluntária simples,23279
-      Violência doméstica contra cônjuge ou análogos,24793
-      Crimes contra o património,172357
-      Roubo por esticão e na via pública,8941
-      Furto de veículo e em veículo motorizado,31352
-      Crimes contra a identidade cultural e integridade pessoal,91
-      Crimes contra a vida em sociedade,42529
-      Condução de veículo com taxa de álcool igual ou superior a 1.2 g/l,16872
-      Crimes contra o estado,5269
-      Crimes contra animais de companhia,2014
-      Crimes previstos em legislação avulsa,26971
-      Condução sem habilitação legal,9664*/
-     
-
         const sample = [
             { type: 'Crimes contra as pessoas', value: 86383 },
             { type: 'Crimes contra a integridade física', value: 56460 },
+            { type: 'Crimes de homicídio voluntário consumado', value: 89},
             { type: 'Ofensa à integridade física voluntária simples', value: 23279 },
             { type: 'Violência doméstica contra cônjuge ou análogos', value: 24793},
             { type: 'Crimes contra o património',value: 172357},
             { type: 'Roubo por esticão e na via pública', value: 8941 },
             { type: 'Furto de veículo e em veículo motorizado', value: 31352 },
+            { type: 'Crimes contra a identidade cultural e integridade pessoal', value:91},
             { type: 'Crimes contra a vida em sociedade', value: 42529 },
             { type: 'Condução de veículo com excesso de álcool', value: 16872},
             { type: 'Crimes contra o estado', value: 5269 },
@@ -53,8 +34,6 @@ async function updateLegend(newData) {
             { type: 'Crimes previstos em legislação avulsa', value: 26971 },
             { type: 'Condução sem habilitação legal', value: 9664 }
           ];
-        
-        
         
         
         const svg = d3.select('svg');
@@ -77,7 +56,8 @@ async function updateLegend(newData) {
             
         const yScale = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, 180000]);
+            .domain([0, d3.max(sample, function(d) { return d.value; })]);
+          
         
         const makeYLines = () => d3.axisLeft()
             .scale(yScale)
@@ -182,7 +162,7 @@ async function updateLegend(newData) {
           svg.append('text')
             .attr('class', 'label')
             .attr('x', width / 2 + margin)
-            .attr('y', 700)
+            .attr('y', 650)
             .attr('text-anchor', 'middle')
             .text('Tipos de crime')
       
