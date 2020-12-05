@@ -7,36 +7,12 @@ var madeira = "madeira";
 // function that wraps around the d3 pattern (bind, add, update, remove)
 async function updateLegend(newData) {
     if(newData=="portugal"){
+      
       d3.selectAll("svg > *").remove();
-      /*
-      const sample = [{}]
-      d3.csv("data/crimes_pt.csv").then(function(data) {
-        for(i=0;i<data.length;i++){
-          const aux = { type: data[i].Tipo , value: +data[i].Valor };
-          sample.push(aux);
-        }
-      });
-      */
-
-        const sample = [
-            { type: 'Crimes contra as pessoas', value: 86383 },
-            { type: 'Crimes contra a integridade física', value: 56460 },
-            { type: 'Crimes de homicídio voluntário consumado', value: 89},
-            { type: 'Ofensa à integridade física voluntária simples', value: 23279 },
-            { type: 'Violência doméstica contra cônjuge ou análogos', value: 24793},
-            { type: 'Crimes contra o património',value: 172357},
-            { type: 'Roubo por esticão e na via pública', value: 8941 },
-            { type: 'Furto de veículo e em veículo motorizado', value: 31352 },
-            { type: 'Crimes contra a identidade cultural e integridade pessoal', value:91},
-            { type: 'Crimes contra a vida em sociedade', value: 42529 },
-            { type: 'Condução de veículo com excesso de álcool', value: 16872},
-            { type: 'Crimes contra o estado', value: 5269 },
-            { type: 'Crimes contra animais de companhia', value: 2014 },
-            { type: 'Crimes previstos em legislação avulsa', value: 26971 },
-            { type: 'Condução sem habilitação legal', value: 9664 }
-          ];
+      
+      d3.csv("data/crimes_pt.csv").then(function(sample) {
         
-        
+      
         const svg = d3.select('svg');
         const svgContainer = d3.select('#container');
         
@@ -45,19 +21,25 @@ async function updateLegend(newData) {
         const height = 600 - 2 * margin;
 
 
-        const chart = svg.append('g')
-        .attr('transform', `translate(${margin}, ${margin})`);
+        const chart = svg.append('g').attr('transform', `translate(${margin}, ${margin})`);
 
         const xScale = d3.scaleBand()
             .range([0, width])
             .domain(sample.map((s) => s.type))
             .padding(0.1)
         
-          
-            
+        
+        var biggest_value=0;
+        for (x in sample){
+          if (+sample[x].value>biggest_value){
+            biggest_value=sample[x].value;
+          }
+        }
+        //console.log(d3.max(sample, function(d) { return d.value; }));
+
         const yScale = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, d3.max(sample, function(d) { return d.value; })]);
+            .domain([0, biggest_value]);
           
         
         const makeYLines = () => d3.axisLeft()
@@ -180,6 +162,9 @@ async function updateLegend(newData) {
             .attr('y', 800)
             .attr('text-anchor', 'start')
             .text('Source: INE, 2020')
+        
+      });
+    
 
     }
 
