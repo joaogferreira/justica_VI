@@ -19,34 +19,39 @@ async function updateLegend(newData) {
         }
       });
       */
-      
+
       /*
-     Crimes de homicídio voluntário consumado,89
-     Crimes contra a integridade física,56460
-     Ofensa à integridade física voluntária simples,23279
-     Violência doméstica contra cônjuge ou análogos,24793
-     Crimes contra o património,172357
-     Roubo por esticão e na via pública,8941
-     Furto de veículo e em veículo motorizado,31352
-     Crimes contra a identidade cultural e integridade pessoal,91
-     Crimes contra a vida em sociedade,42529
-     Condução de veículo com taxa de álcool igual ou superior a 1.2 g/l,16872
-     Crimes contra o estado,5269
-     Crimes contra animais de companhia,2014
-     Crimes previstos em legislação avulsa,26971
-     Condução sem habilitação legal,9664 */
-      
+     Crimes contra as pessoas,86383
+      Crimes de homicídio voluntário consumado,89
+      Crimes contra a integridade física,56460
+      Ofensa à integridade física voluntária simples,23279
+      Violência doméstica contra cônjuge ou análogos,24793
+      Crimes contra o património,172357
+      Roubo por esticão e na via pública,8941
+      Furto de veículo e em veículo motorizado,31352
+      Crimes contra a identidade cultural e integridade pessoal,91
+      Crimes contra a vida em sociedade,42529
+      Condução de veículo com taxa de álcool igual ou superior a 1.2 g/l,16872
+      Crimes contra o estado,5269
+      Crimes contra animais de companhia,2014
+      Crimes previstos em legislação avulsa,26971
+      Condução sem habilitação legal,9664*/
+     
+
         const sample = [
-            { type: 'Crimes contra as pessoas', value: 78.9 },
-            { type: 'Crimes de homicídio voluntário consumado', value: 75.1 },
-            { type: 'Ofensa à integridade física voluntária simples', value: 68.0 },
-            { type: 'Violência doméstica contra cônjuge ou análogos', value: 67.0},
-            { type: 'Crimes contra o património',value: 65.6},
-            { type: 'Roubo por esticão e na via pública', value: 65.1 },
-            { type: 'Furto de veículo e em veículo motorizado', value: 61.9 },
-            { type: 'Crimes contra a identidade cultural e integridade pessoal', value: 60.4 },
-            { type: 'Crimes contra a integridade pessoal', value: 59.6 },
-            { type: 'Crimes contra o estado', value: 59.6 }
+            { type: 'Crimes contra as pessoas', value: 86383 },
+            { type: 'Crimes contra a integridade física', value: 56460 },
+            { type: 'Ofensa à integridade física voluntária simples', value: 23279 },
+            { type: 'Violência doméstica contra cônjuge ou análogos', value: 24793},
+            { type: 'Crimes contra o património',value: 172357},
+            { type: 'Roubo por esticão e na via pública', value: 8941 },
+            { type: 'Furto de veículo e em veículo motorizado', value: 31352 },
+            { type: 'Crimes contra a vida em sociedade', value: 42529 },
+            { type: 'Condução de veículo com excesso de álcool', value: 16872},
+            { type: 'Crimes contra o estado', value: 5269 },
+            { type: 'Crimes contra animais de companhia', value: 2014 },
+            { type: 'Crimes previstos em legislação avulsa', value: 26971 },
+            { type: 'Condução sem habilitação legal', value: 9664 }
           ];
         
         
@@ -59,19 +64,20 @@ async function updateLegend(newData) {
         const width = 1000 - 2 * margin;
         const height = 600 - 2 * margin;
 
+
         const chart = svg.append('g')
         .attr('transform', `translate(${margin}, ${margin})`);
 
         const xScale = d3.scaleBand()
             .range([0, width])
             .domain(sample.map((s) => s.type))
-            .padding(0.4)
+            .padding(0.1)
         
           
             
         const yScale = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, 100]);
+            .domain([0, 180000]);
         
         const makeYLines = () => d3.axisLeft()
             .scale(yScale)
@@ -124,10 +130,10 @@ async function updateLegend(newData) {
                 .attr('x2', width)
                 .attr('y2', y)
       
-              barGroups.append('text')
+                barGroups.append('text')
                 .attr('class', 'divergence')
                 .attr('x', (a) => xScale(a.type) + xScale.bandwidth() / 2)
-                .attr('y', (a) => yScale(a.value) + 100)
+                .attr('y', (a) => yScale(a.value)- 20)
                 .attr('fill', 'white')
                 .attr('text-anchor', 'middle')
                 .text((a, idx) => {
@@ -139,8 +145,8 @@ async function updateLegend(newData) {
       
                   return idx !== i ? text : '';
                 })
-      
             })
+
             .on('mouseleave', function () {
               d3.selectAll('.value')
                 .attr('opacity', 1)
@@ -159,16 +165,16 @@ async function updateLegend(newData) {
           barGroups 
             .append('text')
             .attr('class', 'value')
-            .attr('x', (a) => xScale(a.type) + xScale.bandwidth() / 2)
-            .attr('y', (a) => yScale(a.value) + 30)
-            .attr('text-anchor', 'middle')
+            .attr('x', (a) => xScale(a.type) + xScale.bandwidth() / 10)
+            .attr('y', (a) => yScale(a.value))
+            .attr('text-anchor', 'start')
             .text((a) => `${a.value}`)
           
           svg
             .append('text')
             .attr('class', 'label')
             .attr('x', -(height / 2) - margin)
-            .attr('y', margin / 2.4)
+            .attr('y', margin / 2.4 - 15)
             .attr('transform', 'rotate(-90)')
             .attr('text-anchor', 'middle')
             .text('Valor')
@@ -176,7 +182,7 @@ async function updateLegend(newData) {
           svg.append('text')
             .attr('class', 'label')
             .attr('x', width / 2 + margin)
-            .attr('y', height + margin * 1.7)
+            .attr('y', 700)
             .attr('text-anchor', 'middle')
             .text('Tipos de crime')
       
@@ -190,7 +196,7 @@ async function updateLegend(newData) {
           svg.append('text')
             .attr('class', 'source')
             .attr('x', width - margin / 2)
-            .attr('y', height + margin * 1.7)
+            .attr('y', 800)
             .attr('text-anchor', 'start')
             .text('Source: INE, 2020')
 
