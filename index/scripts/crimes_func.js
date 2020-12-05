@@ -13,64 +13,44 @@ async function updateLegend(newData) {
 
       d3.csv("data/crimes_pt.csv").then(function(data) {
         for(i=0;i<data.length;i++){
-          const aux = { language: data[i].Tipo , value: +data[i].Valor };
+          const aux = { type: data[i].Tipo , value: +data[i].Valor };
           sample.push(aux);
 
         }
       });
       */
-
-      const sample = [
-        { language : 'Crimes', value: 50 }
-      ]
-          /*
+      
+      /*
+     Crimes de homicídio voluntário consumado,89
+     Crimes contra a integridade física,56460
+     Ofensa à integridade física voluntária simples,23279
+     Violência doméstica contra cônjuge ou análogos,24793
+     Crimes contra o património,172357
+     Roubo por esticão e na via pública,8941
+     Furto de veículo e em veículo motorizado,31352
+     Crimes contra a identidade cultural e integridade pessoal,91
+     Crimes contra a vida em sociedade,42529
+     Condução de veículo com taxa de álcool igual ou superior a 1.2 g/l,16872
+     Crimes contra o estado,5269
+     Crimes contra animais de companhia,2014
+     Crimes previstos em legislação avulsa,26971
+     Condução sem habilitação legal,9664 */
+      
         const sample = [
-            {
-              language: 'Rust',
-              value: 78.9
-            },
-            {
-              language: 'Kotlin',
-              value: 75.1
-            },
-            {
-              language: 'Python',
-              value: 68.0
-            },
-            {
-              language: 'TypeScript',
-              value: 67.0
-            },
-            {
-              language: 'Go',
-              value: 65.6
-            },
-            {
-              language: 'Swift',
-              value: 65.1
-            },
-            {
-              language: 'JavaScript',
-              value: 61.9
-            },
-            {
-              language: 'C#',
-              value: 60.4
-            },
-            {
-              language: 'F#',
-              value: 59.6
-            },
-            {
-              language: 'Clojure',
-              value: 59.6
-            }
+            { type: 'Crimes contra as pessoas', value: 78.9 },
+            { type: 'Crimes de homicídio voluntário consumado', value: 75.1 },
+            { type: 'Ofensa à integridade física voluntária simples', value: 68.0 },
+            { type: 'Violência doméstica contra cônjuge ou análogos', value: 67.0},
+            { type: 'Crimes contra o património',value: 65.6},
+            { type: 'Roubo por esticão e na via pública', value: 65.1 },
+            { type: 'Furto de veículo e em veículo motorizado', value: 61.9 },
+            { type: 'Crimes contra a identidade cultural e integridade pessoal', value: 60.4 },
+            { type: 'Crimes contra a integridade pessoal', value: 59.6 },
+            { type: 'Crimes contra o estado', value: 59.6 }
           ];
         
         
-        */
-
-        console.log(sample);
+        
         
         const svg = d3.select('svg');
         const svgContainer = d3.select('#container');
@@ -84,8 +64,10 @@ async function updateLegend(newData) {
 
         const xScale = d3.scaleBand()
             .range([0, width])
-            .domain(sample.map((s) => s.language))
+            .domain(sample.map((s) => s.type))
             .padding(0.4)
+        
+          
             
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -96,7 +78,9 @@ async function updateLegend(newData) {
       
         chart.append('g')
             .attr('transform', `translate(0, ${height})`)
-            .call(d3.axisBottom(xScale));
+            .call(d3.axisBottom(xScale))
+            .selectAll(".tick text")  
+        .call(wrap, xScale.bandwidth());
       
         chart.append('g')
             .call(d3.axisLeft(yScale));
@@ -116,7 +100,7 @@ async function updateLegend(newData) {
           barGroups
             .append('rect')
             .attr('class', 'bar')
-            .attr('x', (g) => xScale(g.language))
+            .attr('x', (g) => xScale(g.type))
             .attr('y', (g) => yScale(g.value))
             .attr('height', (g) => height - yScale(g.value))
             .attr('width', xScale.bandwidth())
@@ -128,7 +112,7 @@ async function updateLegend(newData) {
                 .transition()
                 .duration(300)
                 .attr('opacity', 1)
-                .attr('x', (a) => xScale(a.language) - 5)
+                .attr('x', (a) => xScale(a.type) - 5)
                 .attr('width', xScale.bandwidth() + 10)
       
               const y = yScale(actual.value)
@@ -142,7 +126,7 @@ async function updateLegend(newData) {
       
               barGroups.append('text')
                 .attr('class', 'divergence')
-                .attr('x', (a) => xScale(a.language) + xScale.bandwidth() / 2)
+                .attr('x', (a) => xScale(a.type) + xScale.bandwidth() / 2)
                 .attr('y', (a) => yScale(a.value) + 100)
                 .attr('fill', 'white')
                 .attr('text-anchor', 'middle')
@@ -165,7 +149,7 @@ async function updateLegend(newData) {
                 .transition()
                 .duration(300)
                 .attr('opacity', 1)
-                .attr('x', (a) => xScale(a.language))
+                .attr('x', (a) => xScale(a.type))
                 .attr('width', xScale.bandwidth())
       
               chart.selectAll('#limit').remove()
@@ -175,7 +159,7 @@ async function updateLegend(newData) {
           barGroups 
             .append('text')
             .attr('class', 'value')
-            .attr('x', (a) => xScale(a.language) + xScale.bandwidth() / 2)
+            .attr('x', (a) => xScale(a.type) + xScale.bandwidth() / 2)
             .attr('y', (a) => yScale(a.value) + 30)
             .attr('text-anchor', 'middle')
             .text((a) => `${a.value}`)
@@ -234,3 +218,27 @@ d3.select('#region')
     var newData = eval(d3.select(this).property('value'));
     updateLegend(newData);
 });
+
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+}
