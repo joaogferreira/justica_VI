@@ -31,7 +31,31 @@ body {
   background-color: #EBC8B2;
   color: black;
 }
+
+.bar {
+  fill: #EBC8B2;
+}
+        
+.axis {
+  font-size: 13px;
+}
+        
+.axis path,.axis line {
+  fill: none;
+  display: none;
+}
+        
+.label {
+  font-size: 13px;
+}
+
+
 </style>
+
+
+<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
+
+
 </head>
 <body>
 
@@ -44,10 +68,24 @@ body {
   <a href="vigilancia.html">Vigilância electrónica</a>
 </div>
 
-<div style="padding-left:16px">
-  <h2>Top Navigation Example</h2>
-  <p>Some content..</p>
+<div style="margin-left: 16px; margin-top: 20px;">
+  <label for="region">Região: </label>
+
+  <select style="margin-left: 10px;" id="region">
+    <option disabled selected value> -- select an option -- </option>
+    <option value="portugal" id="Portugal" >Portugal</option>
+    <option value="continente" id="Continente" >Continente</option>
+    <option value="acores" id="Açores" >R.A. dos Açores</option>
+    <option value="madeira" id="Madeira ">R.A. da Madeira</option>
+  </select>
 </div>
 
+
+<div id="graphic"></div>
+
 </body>
+
+
+<script src="scripts/taxa_func.js"></script>
+
 </html>
