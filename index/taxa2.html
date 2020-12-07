@@ -59,7 +59,7 @@ text {
 </style>
 
 
-<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
+<script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
 
 
 </head>
@@ -77,20 +77,22 @@ text {
 <div style="margin-left: 16px; margin-top: 20px;">
   <label for="region">Região: </label>
 
-  <select style="margin-left: 10px;" id="region">
-    <option disabled selected value> -- select an option -- </option>
-    <option value="portugal" id="Portugal" >Portugal</option>
-    <option value="continente" id="Continente" >Continente</option>
-    <option value="acores" id="Açores" >R.A. dos Açores</option>
-    <option value="madeira" id="Madeira ">R.A. da Madeira</option>
-  </select>
+  <div style="margin-left: 16px; margin-top: 40px;">
+    <form action="" method="post">
+        <input type="checkbox" name="portugal" value="portugal" checked/> Portugal
+        <input type="checkbox" name="favorite2" value="continente" checked /> Continente
+        <input type="checkbox" name="favorite3" value="acores" checked /> R.A. dos Açores
+        <input type="checkbox" name="favorite4" value="madeira" checked /> R.A. da Madeira
+    </form>
+  </div>
+
+  <div style="margin-left: 16px; margin-top: 40px;">
+    <form action="taxa.html">
+      <input type="submit" value="Single Value Chart" />
+  </form>
 </div>
 
-<div style="margin-left: 16px; margin-top: 40px;">
-  <form action="taxa2.html">
-    <input type="submit" value="Multi Value Chart" />
-</form>
-</div>
+<svg width="1260" height="500" style="margin-top:40px;margin-left: 300px;"></svg>
 
 <p style="color: #e69665; font-size: 22px; font-weight: 600; margin-left: 600px;" id="titulo"></p>
 <div id="graphic"></div>
@@ -100,6 +102,6 @@ text {
 
 
 
-<script src="scripts/taxa_func.js"></script>
+<script src="scripts/taxa_func2.js"></script>
 
 </html>
