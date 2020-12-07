@@ -121,32 +121,27 @@ text.source {
 </div>
 
 <div style="margin-left: 16px; margin-top: 20px;">
-  <label for="year">Ano: </label>
-
-    <select style="margin-left: 33px;" id="year">
-      <option disabled selected value> -- select an option -- </option>
-      <option value="2019" id="2019">2019</option>
-      <option value="2018" id="2018">2018</option>
-      <option value="2017" id="2017">2017</option>
-      <option value="2016" id="2016">2016</option>
-      <option value="2015" id="2015">2015</option>
-    </select>
-</div>
-
-<div style="margin-left: 16px; margin-top: 40px;">
-  <form action="vigilancia2.html">
-    <input type="submit" value="Multi Value Chart" />
-</form>
-</div>
-
-<div id='layout'>
-  <div id='container'>
-    <svg></svg>
+    <label for="year">Ano: </label>
+      <form action="" method="post">
+          <input type="checkbox" name="portugal" value="2015" checked/> 2015
+          <input type="checkbox" name="favorite2" value="2016" checked /> 2016
+          <input type="checkbox" name="favorite3" value="2017" checked /> 2017
+          <input type="checkbox" name="favorite4" value="2018" checked /> 2018
+          <input type="checkbox" name="favorite5" value="2019" checked /> 2019
+      </form>
   </div>
-</div>
-
-</body>
-
-<script src="scripts/vigilancia_func.js"></script>
+  
+  <div style="margin-left: 16px; margin-top: 40px;">
+      <form action="vigilancia.html">
+        <input type="submit" value="Single Value Chart" />
+    </form>
+    </div>
+  
+  
+    <svg width="1260" height="500" style="margin-top:40px;margin-left: 300px;"></svg>
+  
+  </body>
+  
+  <script src="scripts/vigilancia_func2.js"></script>
 
 </html>
