@@ -476,7 +476,7 @@ async function updateLegend(newData) {
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Crimes registados em ' + newData.charAt(0).toUpperCase() + newData.slice(1) + ' em 2019')
+            .text('Crimes registados em Portugal Continental em 2019')
       
           svg.append('text')
             .attr('class', 'source')
@@ -634,7 +634,7 @@ async function updateLegend(newData) {
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Crimes registados em ' + newData.charAt(0).toUpperCase() + newData.slice(1) + ' em 2019')
+            .text('Crimes registados na Região Autónoma dos Açores em 2019')
       
           svg.append('text')
             .attr('class', 'source')
@@ -792,7 +792,7 @@ async function updateLegend(newData) {
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Crimes registados em ' + newData.charAt(0).toUpperCase() + newData.slice(1) + ' em 2019')
+            .text('Crimes registados na Região Autónoma da Madeira em 2019')
       
           svg.append('text')
             .attr('class', 'source')
