@@ -145,6 +145,7 @@ function render_chart(selected){
             .attr("width", x1.bandwidth())
             .attr("height", function(d) { return height - y(d.value); })
             .attr("fill", function(d) { return z(d.key); });
+            //por aqui um mouseover
 
         g.append("g")
             .attr("class", "axis")
@@ -161,7 +162,7 @@ function render_chart(selected){
             .attr("fill", "#000")
             .attr("font-weight", "bold")
             .attr("text-anchor", "start")
-            .text("Population");
+            .text("Nº");
 
         var legend = g.append("g")
             .attr("font-family", "sans-serif")
