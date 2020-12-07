@@ -42,22 +42,18 @@ function render_chart(selected){
     }
     else if(selected.length=="2"){
         var z = d3.scaleOrdinal()
-        .range(["#98abc5", "#000000"]); 
+        .range(["#98abc5", "#8a89a6"]); 
     }
     else if(selected.length=="1"){
-        var z = d3.scaleOrdinal().range(["#990000"])
+        var z = d3.scaleOrdinal().range(["#98abc5"])
     }
     else{
-        var z = d3.scaleOrdinal().range(["#FFFFFF"])
+        var z = d3.scaleOrdinal().range(["#98abc5"])
     }
 
 
-    /*
-    var z = d3.scaleOrdinal()
-        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);  */
-
     var linha=1;
-    d3.csv("data/data.csv", function(d, i, columns, rows) {
+    d3.csv("data/data_crimes.csv", function(d, i, columns, rows) {
         
         for (var i = 1; i < columns.length; ++i) {
             //console.log(linha,i);
@@ -127,7 +123,7 @@ function render_chart(selected){
 
         console.log("AFTER:"+keys);
 
-        x0.domain(data.map(function(d) { return d.State; }));
+        x0.domain(data.map(function(d) { return d.Crime; }));
         x1.domain(keys).rangeRound([0, x0.bandwidth()]);
         y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
 
@@ -136,7 +132,7 @@ function render_chart(selected){
             .data(data)
             .enter().append("g")
             .attr("class","bar")
-            .attr("transform", function(d) { return "translate(" + x0(d.State) + ",0)"; })
+            .attr("transform", function(d) { return "translate(" + x0(d.Crime) + ",0)"; })
             .selectAll("rect")
             .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
             .enter().append("rect")
