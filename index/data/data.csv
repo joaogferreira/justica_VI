@@ -1,16 +1,16 @@
 State,Portugal,Continente,Açores,Madeira
-Crimes contra as pessoas,86383,79864,3591,2511
-Crimes de homicídio voluntário consumado,89,83,0,0
-Crimes contra a integridade física,56460,52621,2155,1667
-Ofensa à integridade física voluntária simples,23279,21538,1039,694
-Violência doméstica contra cônjuge ou análogos,24793,23229,839,719
-Crimes contra o património,172357,162867,3930,2583
-Roubo por esticão e na via pública,8941,8717,52,167
-Furto de veículo e em veículo motorizado,31352,30636,390,325
-Crimes contra a identidade cultural e integridade pessoal,91,89,0,0
-Crimes contra a vida em sociedade,42529,40074,707,985
-Condução de veículo com taxa de álcool igual ou superior a 1.2 g/l,16872,15550,495,574
-Crimes contra o estado,5269,4886,206,63
-Crimes contra animais de companhia,2014,1905,48,61
-Crimes previstos em legislação avulsa,26971,24966,641,432
-Condução sem habilitação legal,9664,9072,269,159
+Pessoas,86383,79864,3591,2511
+Homicídio,890,830,0,0
+Integridade Física,56460,52621,2155,1667
+Ofensa,23279,21538,1039,694
+Violência Doméstica,24793,23229,839,719
+Património,172357,162867,3930,2583
+Roubos,8941,8717,52,167
+Furto de veículo,31352,30636,390,325
+Cultural,910,890,0,0
+Sociedade,42529,40074,707,985
+Condução (álcool),16872,15550,495,574
+Estado,5269,4886,206,63
+Animais,2014,1905,48,61
+Legislação,26971,24966,641,432
+Condução,9664,9072,269,159
