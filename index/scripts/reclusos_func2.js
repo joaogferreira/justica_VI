@@ -34,7 +34,7 @@ function render_chart(selected){
 
     if(selected.length=="5"){
             var z = d3.scaleOrdinal()
-            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b","#990000"]); 
+            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b","#6c487c"]); 
     }
     else if(selected.length=="4"){
             var z = d3.scaleOrdinal()
@@ -62,38 +62,28 @@ function render_chart(selected){
         for (var i = 1; i < columns.length; ++i) {
             if(i==1){
                 if(selected.includes("2015")){
-                    //console.log("pt");
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Portugal",d[columns[i]]);
             }
             else if(i==2){
                 if(selected.includes("2016")){
-                    //console.log("cont");
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Continente",d[columns[i]]);
             }
             else if(i==3){
                 if(selected.includes("2017")){
-                    //console.log("ac");
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Acores",d[columns[i]]);
             }
             else if(i==4){
                 if(selected.includes("2018")){
-                    //console.log("mad");
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Madeira",d[columns[i]]);
             }
             else if(i==5){
                 if(selected.includes("2019")){
-                    //console.log("mad");
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Madeira",d[columns[i]]);
             }
             
             
@@ -105,8 +95,6 @@ function render_chart(selected){
 
 
         var keys = data.columns.slice(1);
-        //console.log("BEFORE:"+keys);
-
         
         for(x in keys){
             if(selected.includes("2015")==false){
@@ -137,7 +125,7 @@ function render_chart(selected){
             
         }
 
-        console.log("AFTER:"+keys);
+        //console.log("AFTER:"+keys);
 
         x0.domain(data.map(function(d) { return d.Crime; }));
         x1.domain(keys).rangeRound([0, x0.bandwidth()]);
@@ -157,7 +145,6 @@ function render_chart(selected){
             .attr("width", x1.bandwidth())
             .attr("height", function(d) { return height - y(d.value); })
             .attr("fill", function(d) { return z(d.key); });
-            //por aqui um mouseover
 
         g.append("g")
             .attr("class", "axis")

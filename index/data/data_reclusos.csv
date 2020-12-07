@@ -1,16 +1,7 @@
 Crime,2015,2016,2017,2018,2019
-Pessoas,86383,79864,3591,2511,0
-Homicídio,890,830,0,0,0
-Integridade Física,56460,52621,2155,1667,0
-Ofensa,23279,21538,1039,694,0
-Violência Doméstica,24793,23229,839,719,0
-Património,172357,162867,3930,2583,0
-Roubos,8941,8717,52,167,0
-Furto de veículo,31352,30636,390,325,0
-Cultural,910,890,0,0,0
-Sociedade,42529,40074,707,985,0
-Condução (álcool),16872,15550,495,574,0
-Estado,5269,4886,206,63,0
-Animais,2014,1905,48,61,0
-Legislação,26971,24966,641,432,0
-Condução,9664,9072,269,159,0
+Crimes contra as pessoas,3051,2893,2497,2936,2788
+Crimes contra o património,3150,3236,3321,3479,3030
+Crimes contra a vida em sociedade,1184,1158,963,746,831
+Crimes contra o Estado,514,704,851,1099,1157
+Crimes respeitantes a estupefacientes,2294,2208,1950,1675,1862
+Outros,1726,1463,1303,736,854
