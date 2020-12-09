@@ -5,33 +5,36 @@ var madeira = "madeira";
 
 
 window.onload = function(){
-    render_chart(["portugal","continente","acores","madeira"]);
+    build_chart(["portugal","continente","acores","madeira"]);
 }
 
 
-
-function render_chart(selected){
-    console.log("->"+selected);
+function build_chart(selected){
+    /*
+    Limpar SVG já utlizado anteriormente
+    */
     d3.selectAll("svg > *").remove();
 
+    /*
+    Definir SVG
+    */
     var svg = d3.select("svg"),
         margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom,
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // The scale spacing the groups:
-    var x0 = d3.scaleBand()
-        .rangeRound([0, width])
-        .paddingInner(0.1);
+    //Eixo X - Criar escala
+    var x0 = d3.scaleBand().rangeRound([0, width]).paddingInner(0.1);
+    var x1 = d3.scaleBand().padding(0.05);
 
-    // The scale for spacing each group's bar:
-    var x1 = d3.scaleBand()
-        .padding(0.05);
+    //Eixo Y - Criar escala
+    var y = d3.scaleLinear().rangeRound([height, 0]);
+    
 
-    var y = d3.scaleLinear()
-        .rangeRound([height, 0]);
-
+    /*
+        Definir as cores das barras de acordo com o número de regiões que temos para exibir
+    */
     if(selected.length=="4"){
             var z = d3.scaleOrdinal()
             .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b"]); 
@@ -51,52 +54,40 @@ function render_chart(selected){
         var z = d3.scaleOrdinal().range(["#98abc5"])
     }
 
-
+    
+    /*
+        Iterar sobre o CSV
+    */
     var linha=1;
     d3.csv("data/data_taxa.csv", function(d, i, columns, rows) {
-        
+        //Se a região não estiver incluída na lista passada à função não guardamos os dados do CSV para por no gráfico 
         for (var i = 1; i < columns.length; ++i) {
-            //console.log(linha,i);
             if(i==1){
                 if(selected.includes("portugal")){
-                    //console.log("pt");
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Portugal",d[columns[i]]);
             }
             else if(i==2){
                 if(selected.includes("continente")){
-                    //console.log("cont");
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Continente",d[columns[i]]);
             }
             else if(i==3){
-                if(selected.includes("acores")){
-                    //console.log("ac");
+                if(selected.includes("acores")){                
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Acores",d[columns[i]]);
             }
             else if(i==4){
                 if(selected.includes("madeira")){
-                    //console.log("mad");
                     d[columns[i]] = +d[columns[i]];
                 }
-                //console.log("Madeira",d[columns[i]]);
             }
-            
-            
         }
         linha+=1;
         return d;
     }).then(function(data) {
-
-
         var keys = data.columns.slice(1);
-        console.log("BEFORE:"+keys);
-
-        
+        //Se a região não estiver incluída na lista passada como argumento à função eliminamos essa key da lista de keys (ou seja, os dados não vão ser exibidos)
         for(x in keys){
             if(selected.includes("portugal")==false){
                 if(keys[x]=="Portugal"){
@@ -121,12 +112,13 @@ function render_chart(selected){
             
         }
 
-        console.log("AFTER:"+keys);
-
         x0.domain(data.map(function(d) { return d.Crime; }));
         x1.domain(keys).rangeRound([0, x0.bandwidth()]);
         y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
 
+        /*
+            Construção do gráfico
+        */
         g.append("g")
             .selectAll("g")
             .data(data)
@@ -159,7 +151,7 @@ function render_chart(selected){
             .attr("text-anchor", "start")
             .text("Nº");
 
-        var legend = g.append("g")
+        var subtitle = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
             .attr("text-anchor", "end")
@@ -168,7 +160,7 @@ function render_chart(selected){
             .enter().append("g")
             .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-        legend.append("rect")
+        subtitle.append("rect")
             .attr("x", width - 17)
             .attr("width", 15)
             .attr("height", 15)
@@ -177,15 +169,18 @@ function render_chart(selected){
             .attr("stroke-width",2)
             .on("click",function(d) { update(d) });
 
-        legend.append("text")
+        subtitle.append("text")
             .attr("x", width - 24)
             .attr("y", 9.5)
             .attr("dy", "0.32em")
             .text(function(d) { return d; });
 
+        
+
+        /*
+            Função update - Source: https://bl.ocks.org/63anp3ca/6bafeb64181d87750dbdba78f8678715
+        */
         var filtered = [];
-
-
         function update(d) {
             if (filtered.indexOf(d) == -1) {
                 filtered.push(d);
@@ -233,7 +228,7 @@ function render_chart(selected){
                 .attr("width", x1.bandwidth())
                 .attr("fill", function(d) { return z(d.key); })
                 .duration(500);
-            legend.selectAll("rect")
+            subtitle.selectAll("rect")
                 .transition()
                 .attr("fill",function(d) {
                     if (filtered.length) {
@@ -254,6 +249,9 @@ function render_chart(selected){
 
 }
 
+/*
+Chamar a função build_chart sempre que a checkbox é alterada
+*/
 var selected = ["portugal","continente","acores","madeira"];
 d3.selectAll("input").on("change", function(d){
     if(d3.select(this).property("checked")){
@@ -266,10 +264,14 @@ d3.selectAll("input").on("change", function(d){
             }
         }
     }
-    render_chart(selected);
+    build_chart(selected);
   });
 
 
+/*
+Casos em que o texto do eixo dos X é extenso e fica ilegível
+Source: http://bl.ocks.org/LGBY4/204b1c74962cbcb33feba263e0fb4ad2
+*/
 function wrap(text, width) {
     text.each(function() {
       var text = d3.select(this),
