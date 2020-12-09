@@ -5,13 +5,15 @@ var madeira = "madeira";
 
 
 window.onload = function(){
-    render_chart(["2015","2016","2017","2018","2019"]);
+    build_chart(["2015","2016","2017","2018","2019"]);
 }
 
 
 
-function render_chart(selected){
-    console.log("->"+selected.length);
+function build_chart(selected){
+    /*
+        Limpar SVG
+    */
     d3.selectAll("svg > *").remove();
 
     var svg = d3.select("svg"),
@@ -124,8 +126,6 @@ function render_chart(selected){
             }
             
         }
-
-        //console.log("AFTER:"+keys);
 
         x0.domain(data.map(function(d) { return d.Crime; }));
         x1.domain(keys).rangeRound([0, x0.bandwidth()]);
@@ -270,7 +270,7 @@ d3.selectAll("input").on("change", function(d){
             }
         }
     }
-    render_chart(selected);
+    build_chart(selected);
   });
 
 
