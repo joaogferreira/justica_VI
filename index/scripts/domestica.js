@@ -4,7 +4,6 @@ var acores = "acores";
 var madeira = "madeira";
 
 
-// function that wraps around the d3 pattern (bind, add, update, remove)
 window.onload = function(){
     d3.csv("data/agressoresvd_2019.csv").then(function(sample) {
           
@@ -31,7 +30,6 @@ window.onload = function(){
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -185,7 +183,6 @@ window.onload = function(){
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -352,7 +349,6 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -505,8 +501,7 @@ async function updateLegend(newYear) {
           if (+sample[x].value>biggest_value){
             biggest_value=sample[x].value;
           }
-        }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
+        };
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -668,7 +663,6 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -822,7 +816,6 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -981,7 +974,6 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -1134,7 +1126,6 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -1293,8 +1284,7 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
-
+        
         const yScale = d3.scaleLinear()
             .range([height, 0])
             .domain([0, biggest_value]);
@@ -1446,7 +1436,6 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -1604,7 +1593,6 @@ async function updateLegend(newYear) {
               biggest_value=sample[x].value;
             }
           }
-          //console.log(d3.max(sample, function(d) { return d.value; }));
   
           const yScale = d3.scaleLinear()
               .range([height, 0])
@@ -1757,7 +1745,6 @@ async function updateLegend(newYear) {
                 biggest_value=sample[x].value;
               }
             }
-            //console.log(d3.max(sample, function(d) { return d.value; }));
     
             const yScale = d3.scaleLinear()
                 .range([height, 0])

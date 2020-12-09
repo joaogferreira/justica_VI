@@ -22,18 +22,17 @@ function build_chart(selected){
         height = +svg.attr("height") - margin.top - margin.bottom,
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // The scale spacing the groups:
-    var x0 = d3.scaleBand()
-        .rangeRound([0, width])
-        .paddingInner(0.1);
+    //Eixo X
+    var x0 = d3.scaleBand().rangeRound([0, width]).paddingInner(0.1);
 
-    // The scale for spacing each group's bar:
     var x1 = d3.scaleBand()
         .padding(0.05);
 
-    var y = d3.scaleLinear()
-        .rangeRound([height, 0]);
+    //Eixo Y
+    var y = d3.scaleLinear().rangeRound([height, 0]);
 
+
+    //Definir o número de cores das barras de acordo com o número de anos seleccionados
     if(selected.length=="5"){
             var z = d3.scaleOrdinal()
             .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b","#6c487c"]); 
@@ -58,6 +57,9 @@ function build_chart(selected){
     }
 
 
+    /*
+        Ler o CSV
+    */
     var linha=1;
     d3.csv("data/data_reclusos.csv", function(d, i, columns, rows) {
         
@@ -86,10 +88,7 @@ function build_chart(selected){
                 if(selected.includes("2019")){
                     d[columns[i]] = +d[columns[i]];
                 }
-            }
-            
-            
-            
+            }  
         }
         linha+=1;
         return d;
@@ -98,6 +97,9 @@ function build_chart(selected){
 
         var keys = data.columns.slice(1);
         
+        /*
+            Iterar sobre as keys e se essa key não esitver nos anos escolhidos então é removida (ou seja, os dados para essa key não vão ser mostrados)
+        */
         for(x in keys){
             if(selected.includes("2015")==false){
                 if(keys[x]=="2015"){
@@ -131,6 +133,9 @@ function build_chart(selected){
         x1.domain(keys).rangeRound([0, x0.bandwidth()]);
         y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
 
+        /*
+            Construir gráfico
+        */
         g.append("g")
             .selectAll("g")
             .data(data)
@@ -151,6 +156,9 @@ function build_chart(selected){
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x0));
 
+        /*
+            Eixo Y
+        */
         g.append("g")
             .attr("class", "y axis")
             .call(d3.axisLeft(y).ticks(null, "s"))
@@ -163,7 +171,8 @@ function build_chart(selected){
             .attr("text-anchor", "start")
             .text("Nº");
 
-        var legend = g.append("g")
+
+        var subtitle = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
             .attr("text-anchor", "end")
@@ -172,7 +181,7 @@ function build_chart(selected){
             .enter().append("g")
             .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-        legend.append("rect")
+        subtitle.append("rect")
             .attr("x", width - 17)
             .attr("width", 15)
             .attr("height", 15)
@@ -181,7 +190,7 @@ function build_chart(selected){
             .attr("stroke-width",2)
             .on("click",function(d) { update(d) });
 
-        legend.append("text")
+        subtitle.append("text")
             .attr("x", width - 24)
             .attr("y", 9.5)
             .attr("dy", "0.32em")
@@ -237,7 +246,7 @@ function build_chart(selected){
                 .attr("width", x1.bandwidth())
                 .attr("fill", function(d) { return z(d.key); })
                 .duration(500);
-            legend.selectAll("rect")
+            subtitle.selectAll("rect")
                 .transition()
                 .attr("fill",function(d) {
                     if (filtered.length) {
@@ -258,6 +267,9 @@ function build_chart(selected){
 
 }
 
+/*
+    Chamar a função build_chart com os anos selecionados 
+*/
 var selected = ["2015","2016","2017","2018","2019"];
 d3.selectAll("input").on("change", function(d){
     if(d3.select(this).property("checked")){
