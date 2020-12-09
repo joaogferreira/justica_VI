@@ -1,0 +1,51 @@
+Sources:
+
+Code: 
+
+1) Update selected option - http://jsfiddle.net/spanndemic/5JRMt/
+
+2) D3 How to change dataset based on drop down box selection - https://stackoverflow.com/questions/24193593/d3-how-to-change-dataset-based-on-drop-down-box-selection
+
+3) Bar chart - https://jsfiddle.net/matehu/w7h81xz2/
+
+4) NVD3, Clear svg before loading new chart - https://stackoverflow.com/questions/22452112/nvd3-clear-svg-before-loading-new-chart
+
+5) How to load csv file into variable for usage with d3.js - https://stackoverflow.com/questions/49898456/how-to-load-csv-file-into-variable-for-usage-with-d3-js
+
+6) Learn JS Data - http://learnjsdata.com/read_data.html
+
+7) d3 + positioning data lables in bar chart + top, middle, bottom, center - https://stackoverflow.com/questions/37311334/d3-positioning-data-lables-in-bar-chart-top-middle-bottom-center
+
+8) Multi Series Vertical Floating Bar Chart - https://bl.ocks.org/arpitnarechania/4c803717a57f747c774b5e83903ddde4
+
+9) Grouped Bar Chart Toggle Series, update for d3v5-  https://bl.ocks.org/63anp3ca/6bafeb64181d87750dbdba78f8678715
+
+10) How to create an HTML button that acts like a link? - https://stackoverflow.com/questions/2906582/how-to-create-an-html-button-that-acts-like-a-link
+
+11) Grouped bar chart - https://bl.ocks.org/LemoNode/7bb3dda4e86d6fb62e97e2545213a0c3
+
+12) Interacting with D3 and a Checkbox - https://bl.ocks.org/johnnygizmo/3d593d3bf631e102a2dbee64f62d9de4
+
+13) Horizontal Bar chart d3.v4 - https://bl.ocks.org/caravinden/eb0e5a2b38c8815919290fa838c6b63b
+
+14) scaleOrdinal example - https://bl.ocks.org/d3indepth/fabe4d1adbf658c0b73c74d3ea36d465
+
+15) Simple horizontal bar chart - https://bl.ocks.org/hrecht/f84012ee860cb4da66331f18d588eee3
+
+16) Bar chart with linear x scale - http://bl.ocks.org/danasilver/0ae7fa639d7bfbffa146
+
+17) D3 SVG Bar Chart Using Scale - https://bl.ocks.org/flunky/271ae43e1ff832e3617d5c6e4b0afd9e
+
+18) Wrapping long labels with D3 v4 (sample data) - https://bl.ocks.org/guypursey/f47d8cd11a8ff24854305505dbbd8c07
+
+19) Wrap long labels bar chart - https://blockbuilder.org/LGBY4/204b1c74962cbcb33feba263e0fb4ad2
+
+20) Wrapping Long labels - https://bl.ocks.org/mbostock/7555321
+
+21) Simple d3.js bar chart - https://bl.ocks.org/d3noob/8952219
+
+22) http://bl.ocks.org/larskotthoff/601c66edfb83a11cf2bb
+
+Data: 
+
+1) INE - https://ine.pt/xportal/xmain?xpgid=ine_tema&xpid=INE&tema_cod=1113
