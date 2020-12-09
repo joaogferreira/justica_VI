@@ -9,29 +9,27 @@ window.onload = function(){
 }
 
 
-
 function render_chart(selected){
-    console.log("->"+selected.length);
+    //Limpar o gráfico 
     d3.selectAll("svg > *").remove();
 
+    //Definir SVG
     var svg = d3.select("svg"),
         margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom,
         g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // The scale spacing the groups:
-    var x0 = d3.scaleBand()
-        .rangeRound([0, width])
-        .paddingInner(0.1);
+    var x0 = d3.scaleBand().rangeRound([0, width]).paddingInner(0.1);
 
-    // The scale for spacing each group's bar:
-    var x1 = d3.scaleBand()
-        .padding(0.05);
+    //Bars
+    var x1 = d3.scaleBand().padding(0.05);
 
-    var y = d3.scaleLinear()
-        .rangeRound([height, 0]);
+    var y = d3.scaleLinear().rangeRound([height, 0]);
 
+    /*
+    Atribuição de cores a cada barra de acordo com o número de barras a visualizar
+    */
     if(selected.length=="5"){
             var z = d3.scaleOrdinal()
             .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b","#6c487c"]); 
@@ -56,6 +54,9 @@ function render_chart(selected){
     }
 
 
+    /*
+    Ler CSV com os dados
+    */
     var linha=1;
     d3.csv("data/data_vigilancia.csv", function(d, i, columns, rows) {
         
@@ -84,10 +85,7 @@ function render_chart(selected){
                 if(selected.includes("2019")){
                     d[columns[i]] = +d[columns[i]];
                 }
-            }
-            
-            
-            
+            }   
         }
         linha+=1;
         return d;
@@ -96,6 +94,10 @@ function render_chart(selected){
 
         var keys = data.columns.slice(1);
         
+        /*
+        Keys apenas com os anos pretendidos 
+        Remover os anos que não são pretendidos
+        */
         for(x in keys){
             if(selected.includes("2015")==false){
                 if(keys[x]=="2015"){
@@ -125,12 +127,15 @@ function render_chart(selected){
             
         }
 
-        //console.log("AFTER:"+keys);
-
         x0.domain(data.map(function(d) { return d.Crime; }));
+
         x1.domain(keys).rangeRound([0, x0.bandwidth()]);
+        
         y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
 
+        /*
+        Build graph
+        */
         g.append("g")
             .selectAll("g")
             .data(data)
@@ -163,7 +168,7 @@ function render_chart(selected){
             .attr("text-anchor", "start")
             .text("Nº");
 
-        var legend = g.append("g")
+        var subtitle = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
             .attr("text-anchor", "end")
@@ -172,7 +177,7 @@ function render_chart(selected){
             .enter().append("g")
             .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-        legend.append("rect")
+        subtitle.append("rect")
             .attr("x", width - 17)
             .attr("width", 15)
             .attr("height", 15)
@@ -181,15 +186,15 @@ function render_chart(selected){
             .attr("stroke-width",2)
             .on("click",function(d) { update(d) });
 
-        legend.append("text")
+        subtitle.append("text")
             .attr("x", width - 24)
             .attr("y", 9.5)
             .attr("dy", "0.32em")
             .text(function(d) { return d; });
 
+
+        
         var filtered = [];
-
-
         function update(d) {
             if (filtered.indexOf(d) == -1) {
                 filtered.push(d);
@@ -207,13 +212,9 @@ function render_chart(selected){
             x1.domain(newKeys).rangeRound([0, x0.bandwidth()]);
             y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { if (filtered.indexOf(key) == -1) return d[key]; }); })]).nice();
 
-            svg.select(".y")
-                .transition()
-                .call(d3.axisLeft(y).ticks(null, "s"))
-                .duration(500);
+            svg.select(".y").transition().call(d3.axisLeft(y).ticks(null, "s")).duration(500);
 
-            var bars = svg.selectAll(".bar").selectAll("rect")
-                .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
+            var bars = svg.selectAll(".bar").selectAll("rect").data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
 
             bars.filter(function(d) {
                     return filtered.indexOf(d.key) > -1;
@@ -237,7 +238,7 @@ function render_chart(selected){
                 .attr("width", x1.bandwidth())
                 .attr("fill", function(d) { return z(d.key); })
                 .duration(500);
-            legend.selectAll("rect")
+            subtitle.selectAll("rect")
                 .transition()
                 .attr("fill",function(d) {
                     if (filtered.length) {
@@ -258,6 +259,9 @@ function render_chart(selected){
 
 }
 
+/*
+Chamar a função render_chart sempre que os valores seleccionados mudam
+*/
 var selected = ["2015","2016","2017","2018","2019"];
 d3.selectAll("input").on("change", function(d){
     if(d3.select(this).property("checked")){

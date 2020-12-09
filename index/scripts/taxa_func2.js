@@ -141,7 +141,6 @@ function render_chart(selected){
             .attr("width", x1.bandwidth())
             .attr("height", function(d) { return height - y(d.value); })
             .attr("fill", function(d) { return z(d.key); });
-            //por aqui um mouseover
 
         g.append("g")
             .attr("class", "axis")

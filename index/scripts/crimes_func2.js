@@ -11,7 +11,7 @@ window.onload = function(){
 
 
 function render_chart(selected){
-    console.log("->"+selected);
+    //console.log("->"+selected);
     d3.selectAll("svg > *").remove();
 
     var svg = d3.select("svg"),
@@ -94,8 +94,6 @@ function render_chart(selected){
 
 
         var keys = data.columns.slice(1);
-        console.log("BEFORE:"+keys);
-
         
         for(x in keys){
             if(selected.includes("portugal")==false){
@@ -120,8 +118,6 @@ function render_chart(selected){
             }
             
         }
-
-        console.log("AFTER:"+keys);
 
         x0.domain(data.map(function(d) { return d.Crime; }));
         x1.domain(keys).rangeRound([0, x0.bandwidth()]);

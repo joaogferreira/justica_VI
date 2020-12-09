@@ -4,14 +4,19 @@ var acores = "acores";
 var madeira = "madeira";
 
 
-// function that wraps around the d3 pattern (bind, add, update, remove)
 window.onload = function(){
+  /*
+    Ler CSV
+    Source : https://stackoverflow.com/questions/49898456/how-to-load-csv-file-into-variable-for-usage-with-d3-js
+  */
     d3.csv("data/vigilancia_2019.csv").then(function(sample) {
           
-        
         const svg = d3.select('svg');
         const svgContainer = d3.select('#container');
         
+        /*
+        Tamanho
+        */
         const margin = 80;
         const width = 1000 - 2 * margin;
         const height = 600 - 2 * margin;
@@ -25,22 +30,26 @@ window.onload = function(){
             .padding(0.1)
         
         
+        /*
+        Determinar maior valor para definir a escala do eixo Y
+        */
         var biggest_value=0;
         for (x in sample){
           if (+sample[x].value>biggest_value){
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
-        const yScale = d3.scaleLinear()
-            .range([height, 0])
-            .domain([0, biggest_value]);
+        const yScale = d3.scaleLinear().range([height, 0]).domain([0, biggest_value]);
           
-        
         const makeYLines = () => d3.axisLeft()
             .scale(yScale)
-      
+        
+        /*
+          Construir gráfico
+        */
+
+        //Função Wrap - Utilizada para tornar o eixo do x legível (no caso de ter um comprimento considerável)    
         chart.append('g')
             .attr('transform', `translate(0, ${height})`)
             .call(d3.axisBottom(xScale))
@@ -50,19 +59,19 @@ window.onload = function(){
         chart.append('g')
             .call(d3.axisLeft(yScale));
 
-            chart.append('g')
+        chart.append('g')
             .attr('class', 'grid')
             .call(makeYLines()
               .tickSize(-width, 0, 0)
               .tickFormat('')
             )
       
-          const barGroups = chart.selectAll()
+        const barGroups = chart.selectAll()
             .data(sample)
             .enter()
             .append('g')
       
-          barGroups
+        barGroups
             .append('rect')
             .attr('class', 'bar')
             .attr('x', (g) => xScale(g.type))
@@ -129,6 +138,7 @@ window.onload = function(){
             .attr('text-anchor', 'start')
             .text((a) => `${a.value}`)
           
+          //Título - Eixo Y
           svg
             .append('text')
             .attr('class', 'label')
@@ -137,21 +147,25 @@ window.onload = function(){
             .attr('transform', 'rotate(-90)')
             .attr('text-anchor', 'middle')
             .text('Valor')
-      
+          
+          //Título - Eixo X
           svg.append('text')
             .attr('class', 'label')
             .attr('x', width / 2 + margin)
             .attr('y', 650)
             .attr('text-anchor', 'middle')
             .text('Tipos de crime')
-      
+          
+          
+          //Título
           svg.append('text')
             .attr('class', 'title')
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
             .text('Penas e medidas iniciadas com recurso à vigilância electrónica em Portugal no ano 2019');
-      
+            
+          //Source
           svg.append('text')
             .attr('class', 'source')
             .attr('x', width - margin / 2)
@@ -164,7 +178,7 @@ window.onload = function(){
 }
 
 
-async function updateLegend(newYear) {
+async function update(newYear) {
     if(newYear ==undefined){
         return;
     }
@@ -190,15 +204,16 @@ async function updateLegend(newYear) {
             .range([0, width])
             .domain(sample.map((s) => s.type))
             .padding(0.1)
-        
-        
+
+        /*
+        Determinar o maior valor para definir a escala do eixo Y
+        */
         var biggest_value=0;
         for (x in sample){
           if (+sample[x].value>biggest_value){
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -255,7 +270,10 @@ async function updateLegend(newYear) {
                 .attr('y1', y)
                 .attr('x2', width)
                 .attr('y2', y)
-      
+
+                /*
+                Calcular diferença entre os valores e exibir esse valor
+                */
                 barGroups.append('text')
                 .attr('class', 'divergence')
                 .attr('x', (a) => xScale(a.type) + xScale.bandwidth() / 2)
@@ -266,7 +284,9 @@ async function updateLegend(newYear) {
                   const divergence = (a.value - actual.value).toFixed(1)
                   
                   let text = ''
-                  if (divergence > 0) text += '+'
+                  if (divergence > 0) {
+                    text += '+'
+                  }
                   text += `${divergence}`
       
                   return idx !== i ? text : '';
@@ -274,6 +294,7 @@ async function updateLegend(newYear) {
             })
 
             .on('mouseleave', function () {
+              //Apagar valor da diferença quando o rato deixa de estar sobre a barra
               d3.selectAll('.value')
                 .attr('opacity', 1)
       
@@ -296,6 +317,7 @@ async function updateLegend(newYear) {
             .attr('text-anchor', 'start')
             .text((a) => `${a.value}`)
           
+          //Título eixo Y
           svg
             .append('text')
             .attr('class', 'label')
@@ -304,21 +326,24 @@ async function updateLegend(newYear) {
             .attr('transform', 'rotate(-90)')
             .attr('text-anchor', 'middle')
             .text('Valor')
-      
+          
+          //Título eixo X
           svg.append('text')
             .attr('class', 'label')
             .attr('x', width / 2 + margin)
             .attr('y', 650)
             .attr('text-anchor', 'middle')
             .text('Tipos de crime')
-      
+            
+          //Título 
           svg.append('text')
             .attr('class', 'title')
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
             .text('Penas e medidas iniciadas com recurso à vigilância electrónica em Portugal no ano' + newYear)
-      
+            
+          //Source
           svg.append('text')
             .attr('class', 'source')
             .attr('x', width - margin / 2)
@@ -330,7 +355,6 @@ async function updateLegend(newYear) {
     
 
     }
-
 
     else if (newYear=="2016"){
       d3.selectAll("svg > *").remove();
@@ -360,7 +384,6 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -490,6 +513,7 @@ async function updateLegend(newYear) {
         
       });
     }
+
     else if (newYear=="2017"){
       d3.selectAll("svg > *").remove();
       
@@ -518,7 +542,6 @@ async function updateLegend(newYear) {
             biggest_value=sample[x].value;
           }
         }
-        //console.log(d3.max(sample, function(d) { return d.value; }));
 
         const yScale = d3.scaleLinear()
             .range([height, 0])
@@ -833,8 +856,7 @@ async function updateLegend(newYear) {
               biggest_value=sample[x].value;
             }
           }
-          //console.log(d3.max(sample, function(d) { return d.value; }));
-  
+
           const yScale = d3.scaleLinear()
               .range([height, 0])
               .domain([0, biggest_value]);
@@ -967,12 +989,15 @@ async function updateLegend(newYear) {
 
 
 
+//Chamar a função update sempre que o valor do ano escolhido é alterado
 d3.select('#year')
     .on('change', function() {
         var newYear = eval(d3.select(this).property('value'));
-        updateLegend(newYear);
+        update(newYear);
     })
 
+//Função para tornar o texto do eixo dos X legível (para casos em que é muito extenso)
+//Source: http://bl.ocks.org/LGBY4/204b1c74962cbcb33feba263e0fb4ad2
 function wrap(text, width) {
   text.each(function() {
     var text = d3.select(this),
@@ -980,7 +1005,7 @@ function wrap(text, width) {
         word,
         line = [],
         lineNumber = 0,
-        lineHeight = 1.1, // ems
+        lineHeight = 1.1, 
         y = text.attr("y"),
         dy = parseFloat(text.attr("dy")),
         tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
