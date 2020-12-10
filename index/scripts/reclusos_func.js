@@ -143,7 +143,7 @@ window.onload = function(){
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Crimes registados em Portugal no ano 2019');
+            .text('Reclusos condenados em Portugal no ano 2019');
       
         svg.append('text')
             .attr('class', 'source')
@@ -301,7 +301,7 @@ async function update(newYear) {
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Crimes registados em Portugal no ano ' + newYear)
+            .text('Reclusos condenados em Portugal no ano ' + newYear)
       
           svg.append('text')
             .attr('class', 'source')
@@ -448,7 +448,7 @@ async function update(newYear) {
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Crimes registados em Portugal no ano ' + newYear)
+            .text('Reclusos condenados em Portugal no ano ' + newYear)
       
           svg.append('text')
             .attr('class', 'source')
@@ -598,7 +598,7 @@ async function update(newYear) {
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Crimes registados em Portugal no ano ' + newYear)
+            .text('Reclusos condenados em Portugal no ano ' + newYear)
           
           svg.append('text')
             .attr('class', 'source')
@@ -744,7 +744,7 @@ async function update(newYear) {
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Crimes registados em Portugal no ano ' + newYear)
+            .text('Reclusos condenados em Portugal no ano ' + newYear)
       
           svg.append('text')
             .attr('class', 'source')
